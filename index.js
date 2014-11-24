@@ -35,8 +35,6 @@ function Instrument() {
   };
 }
 
-export default Track;
-
 export function Track(string) {
   var segments = string.split(' ');
   this.sequence = [];
