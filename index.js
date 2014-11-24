@@ -43,8 +43,8 @@ export function Track(string) {
     var commands = [];
     var command;
     for(var j = 0; j < subsegments.length; j++) {
-      if ((command = subsegments[j].match(/([0-9a-fA-F]+)(.)/))) {
-        commands.push({value:parseInt(command[1], 16), name:command[2]});
+      if ((command = subsegments[j].match(/([0-9a-fA-F]*)(.)/))) {
+        commands.push({value:parseInt('0'+command[1], 16), name:command[2]});
       }
     }
     this.sequence.push(commands);
@@ -54,7 +54,7 @@ export function Track(string) {
   this.running = false;
 }
 
-Track.prototype.start = function(t) {
+Track.prototype.start = function() {
   this.index = -1;
   this.position = 0;
   this.running = true;
