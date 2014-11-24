@@ -36,6 +36,7 @@ function Instrument() {
 }
 
 export default Track;
+export default Delay;
 
 function Track(string) {
   var segments = string.split(' ');
@@ -100,4 +101,25 @@ export function sqr(t) {
 
 export function tri(t) {
   return Math.abs(1 - (t % tau)/pi) * 2 - 1;
+}
+
+export function clamp(x, low, high) {
+  return Math.min(Math.max(x, low), high);
+}
+
+function Delay(maxDuration) {
+  this.mem = new Float32Array(maxDuration*sampleRate);
+  this.index = 0;
+}
+
+Delay.prototype.read = function(duration) {
+  var n = this.mem.length;
+  var offset = clamp(duration*sampleRate | 0, 0, n-1);
+  if (duration === undefined) offset = n-1;
+  return this.mem[(n+this.index-offset)%n];
+}
+
+Delay.prototype.write = function(x) {
+  this.mem[this.index] = x;
+  this.index = (this.index + 1) % this.mem.length;
 }
