@@ -36,9 +36,8 @@ function Instrument() {
 }
 
 export default Track;
-export default Delay;
 
-function Track(string) {
+export function Track(string) {
   var segments = string.split(' ');
   this.sequence = [];
   for(var i = 0; i < segments.length; i++) {
@@ -107,7 +106,7 @@ export function clamp(x, low, high) {
   return Math.min(Math.max(x, low), high);
 }
 
-function Delay(maxDuration) {
+export function Delay(maxDuration) {
   this.mem = new Float32Array(maxDuration*sampleRate);
   this.index = 0;
 }
